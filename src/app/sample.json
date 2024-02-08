@@ -1,0 +1,36 @@
+{
+    "ipBlocklist": {
+      "data": {
+        "result": false,
+        "details": {
+          "emailSpam": false,
+          "attackSource": false
+        }
+      }
+    },
+    "tor": {
+      "data": {
+        "result": false
+      }
+    },
+    "vpn": {
+      "data": {
+        "result": false,
+        "methods": {
+          "timezoneMismatch": false,
+          "publicVPN": false
+        }
+      }
+    },
+    "proxy": {
+      "data": {
+        "result": false
+      }
+    },
+    "tampering": {
+      "data": {
+        "result": false,
+        "anomalyScore": 0
+      }
+    }
+  }
