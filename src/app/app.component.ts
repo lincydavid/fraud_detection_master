@@ -32,7 +32,7 @@ export class AppComponent implements OnInit{
       name: '',
       version: '',
     },
-    geolocation: '',
+    geolocation: null,
     device: {
       type: '',
       vendor: '',
@@ -95,10 +95,21 @@ export class AppComponent implements OnInit{
     this.fraudSummary.max_touch_points = navigator.maxTouchPoints;
     this.fraudSummary.is_bot = /bot|crawler|spider|crawling/i.test(navigator.userAgent);
 
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(this.showPosition)
-    }
+    // if (navigator.geolocation) {
+    //   navigator.geolocation.getCurrentPosition(this.showPosition)
+    // }
 
+    this.sharedService.getCurrentLocation().subscribe(
+      (position: any) => {
+        this.fraudSummary.geolocation = {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude
+        };
+      },
+      (error: any) => {
+        this.fraudSummary.geolocation = error.message;
+      }
+    );
   }
 
   showPosition(position: any) {

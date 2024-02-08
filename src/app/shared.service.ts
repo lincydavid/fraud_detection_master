@@ -1,18 +1,31 @@
 // ip-geolocation.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Observer } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SharedService {
-  private apiUrl = 'https://api.ipgeolocationapi.com/geolocate';
 
   constructor(private http: HttpClient) {}
 
-  getIpAndLocation(): Observable<any> {
-    return this.http.get(this.apiUrl);
+  getCurrentLocation(): Observable<any> {
+    return new Observable((observer: Observer<any>) => {
+      if ('geolocation' in navigator) {
+        navigator.geolocation.getCurrentPosition(
+          (position: any) => {
+            observer.next(position);
+            observer.complete();
+          },
+          (error: any) => {
+            observer.error(error);
+          }
+        );
+      } else {
+        observer.error('Geolocation is not supported by your browser.');
+      }
+    });
   }
 
   public getIPAddress() {
